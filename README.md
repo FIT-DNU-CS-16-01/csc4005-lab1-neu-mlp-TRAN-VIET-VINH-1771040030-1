@@ -4,7 +4,7 @@
 
 **Họ tên:** Trần Việt Vinh  
 **MSSV:** 1771040030  
-**Lớp:** CSC4005 - Deep Learning
+**Lớp:** KHMT 17-01
 
 ---
 
