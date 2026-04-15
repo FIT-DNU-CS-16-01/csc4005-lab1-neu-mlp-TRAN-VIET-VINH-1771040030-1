@@ -2,7 +2,9 @@ __pycache__/
 *.pyc
 .venv/
 wandb/
-outputs/*
+# outputs/          # Tạm thời comment để thêm ảnh
+outputs/*.pt        # Chỉ bỏ qua file model .pt
+outputs/*.pth
 !outputs/.gitkeep
 *_extracted/
 *.pt

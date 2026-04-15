@@ -1,0 +1,116 @@
+{
+  "best_val_loss": 1.427718405370359,
+  "best_val_acc": 0.4777777777777778,
+  "test_loss": 1.396905404550058,
+  "test_acc": 0.43333333333333335,
+  "class_names": [
+    "Crazing",
+    "Inclusion",
+    "Patches",
+    "Pitted_Surface",
+    "Rolled-in_Scale",
+    "Scratches"
+  ],
+  "classification_report": {
+    "Crazing": {
+      "precision": 0.3548387096774194,
+      "recall": 0.4888888888888889,
+      "f1-score": 0.411214953271028,
+      "support": 45.0
+    },
+    "Inclusion": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 45.0
+    },
+    "Patches": {
+      "precision": 0.723404255319149,
+      "recall": 0.7555555555555555,
+      "f1-score": 0.7391304347826086,
+      "support": 45.0
+    },
+    "Pitted_Surface": {
+      "precision": 0.5306122448979592,
+      "recall": 0.5777777777777777,
+      "f1-score": 0.5531914893617021,
+      "support": 45.0
+    },
+    "Rolled-in_Scale": {
+      "precision": 0.24528301886792453,
+      "recall": 0.28888888888888886,
+      "f1-score": 0.2653061224489796,
+      "support": 45.0
+    },
+    "Scratches": {
+      "precision": 0.3793103448275862,
+      "recall": 0.4888888888888889,
+      "f1-score": 0.42718446601941745,
+      "support": 45.0
+    },
+    "accuracy": 0.43333333333333335,
+    "macro avg": {
+      "precision": 0.37224142893167306,
+      "recall": 0.43333333333333335,
+      "f1-score": 0.3993379109806226,
+      "support": 270.0
+    },
+    "weighted avg": {
+      "precision": 0.37224142893167306,
+      "recall": 0.43333333333333335,
+      "f1-score": 0.3993379109806226,
+      "support": 270.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      22,
+      0,
+      6,
+      11,
+      6,
+      0
+    ],
+    [
+      4,
+      0,
+      0,
+      5,
+      13,
+      23
+    ],
+    [
+      3,
+      0,
+      34,
+      5,
+      3,
+      0
+    ],
+    [
+      6,
+      0,
+      6,
+      26,
+      3,
+      4
+    ],
+    [
+      20,
+      1,
+      1,
+      1,
+      13,
+      9
+    ],
+    [
+      7,
+      0,
+      0,
+      1,
+      15,
+      22
+    ]
+  ],
+  "resolved_data_dir": "NEU-CLS_extracted"
+}
