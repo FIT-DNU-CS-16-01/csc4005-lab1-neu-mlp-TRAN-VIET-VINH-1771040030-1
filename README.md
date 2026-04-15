@@ -1,77 +1,100 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/LiEKMyvY)
+
 # CSC4005 Lab 1 – NEU MLP Starter
 
-Starter kit này dùng cho **Lab 1 – Training & Regularization** của CSC4005. Repo **không chứa thư mục `data/`**. Sinh viên chạy trực tiếp với đường dẫn tới bộ dữ liệu ngoài repo `NEU-CLS.zip`.
+**Họ tên:** Trần Việt Vinh  
+**MSSV:** 1771040030  
+**Lớp:** CSC4005 - Deep Learning
 
-Nội dung lab: so sánh ít nhất 3 cấu hình, xem learning curves, tránh dùng test để chọn mô hình, và kết luận cấu hình tốt nhất dựa trên validation. Case study là NEU Surface Defect Database với 6 lớp lỗi bề mặt thép.
+---
 
-## 1. Cấu trúc repo
+## 📌 Tổng quan
+
+Starter kit này dùng cho **Lab 1 – Training & Regularization** của CSC4005.
+
+**Mục tiêu:** So sánh ít nhất 3 cấu hình huấn luyện, phân tích learning curves, tránh dùng test set để chọn mô hình, và kết luận cấu hình tốt nhất dựa trên validation set.
+
+**Dataset:** NEU Surface Defect Database (6 loại lỗi bề mặt thép):
+- Crazing
+- Inclusion
+- Patches
+- Pitted Surface
+- Rolled-in Scale
+- Scratches
+
+**Link W&B Dashboard:** https://wandb.ai/vinhviettran955-no/csc4005-lab1-neu-mlp
+
+**Báo cáo chi tiết:** [REPORT_TEMPLATE.md](REPORT_TEMPLATE.md)
+
+---
+
+## 📁 Cấu trúc repo
+
 ```text
-csc4005_lab1_neu_mlp_starter/
+csc4005-lab1-neu-mlp-TRAN-VIET-VINH-1771040030-1/
 ├── .github/workflows/validate-lab1.yml
-├── README.md
-├── REPORT_TEMPLATE.md
-├── requirements.txt
+├── README.md                      # File hướng dẫn này
+├── REPORT_TEMPLATE.md             # Báo cáo đầy đủ 8 yêu cầu
+├── requirements.txt               # Các thư viện cần cài đặt
 ├── configs/
-│   └── baseline.json
+│   └── baseline.json              # Cấu hình baseline
 ├── docs/
-│   └── LAB_GUIDE_LAB1.md
+│   ├── LAB_GUIDE_LAB1.md
 │   └── WANDB_GUIDE.md
 ├── notebooks/
-├── outputs/
+│   └── lab1_demo.ipynb
+├── outputs/                       # Kết quả huấn luyện
+│   ├── baseline_adamw/            # Config 1: Baseline (AdamW)
+│   │   ├── best_model.pt
+│   │   ├── curves.png
+│   │   ├── confusion_matrix.png
+│   │   └── metrics.json
+│   ├── sgd_test/                  # Config 2: SGD
+│   │   └── ...
+│   └── high_reg/                  # Config 3: Regularization mạnh
+│       └── ...
 ├── ci/
 │   ├── check_structure.py
 │   └── smoke_train.py
 └── src/
     ├── __init__.py
-    ├── dataset.py
-    ├── model.py
-    ├── train.py
-    └── utils.py
-```
+    ├── dataset.py                 # Load và xử lý dữ liệu NEU
+    ├── model.py                   # Định nghĩa mô hình MLP
+    ├── train.py                   # Script huấn luyện chính
+    └── utils.py                   # Hàm tiện ích
 
-## 2. Cài đặt
-```bash
+🚀 Cài đặt
+1. Clone repository
+
+git clone https://github.com/FFT-DNU-CS-16-01/csc4005-lab1-neu-mlp-TRAN-VIET-VINH-1771040030-1.git
+cd csc4005-lab1-neu-mlp-TRAN-VIET-VINH-1771040030-1
+2. Tạo môi trường ảo (khuyến nghị)
+
+
+# Sử dụng conda
+conda create -n csc4005-dl python=3.9
 conda activate csc4005-dl
+
+# Hoặc sử dụng venv (Windows)
+python -m venv venv
+venv\Scripts\activate
+
+# Hoặc venv (Linux/Mac)
+python -m venv venv
+source venv/bin/activate
+
+3. Cài đặt các thư viện
+bash
 pip install --upgrade pip
 pip install -r requirements.txt
-```
+Nội dung file requirements.txt:
 
-## 3. Dữ liệu
-Repo này **không có thư mục `data/`**. Bạn phải cung cấp đường dẫn dữ liệu khi chạy.
-
-Hỗ trợ 2 kiểu dữ liệu:
-- **Kiểu A:** thư mục lớp riêng `Crazing/`, `Inclusion/`, ...
-- **Kiểu B:** file ZIP hoặc thư mục phẳng có tên ảnh kiểu `crazing_10.jpg`, `rolled-in_scale_21.jpg`, ...
-
-Ví dụ với đúng bộ dữ liệu do giảng viên cung cấp:
-```bash
-python -m src.train --data_dir /duong_dan/NEU-CLS.zip --run_name quick_test
-```
-
-## 4. Chạy baseline chuẩn của Lab 1
-```bash
-python -m src.train   --data_dir /duong_dan/NEU-CLS.zip   --project csc4005-lab1-neu-mlp   --run_name baseline_adamw   --optimizer adamw   --lr 0.001   --weight_decay 0.0001   --dropout 0.3   --epochs 20   --batch_size 32   --img_size 64   --patience 5   --augment   --use_wandb
-```
-
-## 5. Kết quả đầu ra
-Mỗi run sẽ được lưu vào `outputs/<run_name>/` gồm:
-- `best_model.pt`
-- `history.csv`
-- `curves.png`
-- `confusion_matrix.png`
-- `metrics.json`
-
-## 6. W&B
-Tên project thống nhất là:
-```text
-csc4005-lab1-neu-mlp
-```
-
-Xem hướng dẫn chi tiết tại `docs/WANDB_GUIDE.md`.
-
-## 7. Kiểm tra nhanh repo
-```bash
-python ci/check_structure.py
-python ci/smoke_train.py
-```
+text
+torch>=1.9.0
+torchvision>=0.10.0
+numpy>=1.19.0
+matplotlib>=3.3.0
+scikit-learn>=0.24.0
+wandb>=0.12.0
+tqdm>=4.62.0
+Pillow>=8.3.0
